@@ -13,7 +13,6 @@ import (
 
 func FetchUserRestuls(username string) userRaiting {
 	resp, err := http.Get("https://letterboxd.com/" + username + "/films/ratings/")
-	userHtmlPages := []*goquery.Document{}
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -21,13 +20,16 @@ func FetchUserRestuls(username string) userRaiting {
 
 	b, _ := io.ReadAll(resp.Body)
 	firstPage, err := goquery.NewDocumentFromReader(strings.NewReader(string(b)))
-	userHtmlPages = append(userHtmlPages, firstPage)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	pageCount := getPageCount(string(b))
-	for i := 2; i <= pageCount; i++ { //TODO: Could add concurrency here for improvmenet in large users.
-		userHtmlPages = append(userHtmlPages, fetchExtraPage(username, i))
+	userHtmlPages := make([]*goquery.Document, pageCount)
+	userHtmlPages[0] = firstPage
+	for i := 2; i <= pageCount; i++ {
+		//go func(i int, userHTMLPages []*goquery.Document) { //Todo: Work this out so it doesnt take 10 seconds per 500 results
+		userHtmlPages[i-1] = fetchExtraPage(username, i)
+		//}(i, userHtmlPages)
 	}
 	fmt.Println("Fetch finished, now parsing")
 	return parseList(userHtmlPages, username)

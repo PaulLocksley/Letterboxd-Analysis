@@ -8,7 +8,7 @@ import (
 
 func parseList(pages []*goquery.Document, username string) userRaiting {
 	y := 0
-	userRaitings := userRaiting{name: username, movies: []movie{}}
+	userRaitings := userRaiting{Name: username, Movies: []movie{}}
 	for i := range pages {
 		pages[i].Find(".poster-container").Each(func(x int, s *goquery.Selection) {
 			movie := movie{}
@@ -16,30 +16,30 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 			raiting, _ := raitingHtml.Html()
 			switch raiting {
 			case " ½ ":
-				movie.raiting = 1
+				movie.Raiting = 1
 			case " ★ ":
-				movie.raiting = 2
+				movie.Raiting = 2
 			case " ★½ ":
-				movie.raiting = 3
+				movie.Raiting = 3
 			case " ★★ ":
-				movie.raiting = 4
+				movie.Raiting = 4
 			case " ★★½ ":
-				movie.raiting = 5
+				movie.Raiting = 5
 			case " ★★★ ":
-				movie.raiting = 6
+				movie.Raiting = 6
 			case " ★★★½ ":
-				movie.raiting = 7
+				movie.Raiting = 7
 			case " ★★★★ ":
-				movie.raiting = 8
+				movie.Raiting = 8
 			case " ★★★★½ ":
-				movie.raiting = 9
+				movie.Raiting = 9
 			case " ★★★★★ ":
-				movie.raiting = 10
+				movie.Raiting = 10
 			}
 			titleHtml := s.Find(".image").First()
 			title, _ := titleHtml.Attr("alt")
-			movie.name = title
-			userRaitings.movies = append(userRaitings.movies, movie)
+			movie.Name = title
+			userRaitings.Movies = append(userRaitings.Movies, movie)
 			y++
 		})
 	}

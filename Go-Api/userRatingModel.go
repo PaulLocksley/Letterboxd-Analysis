@@ -1,17 +1,17 @@
 package main
 
 type userRaiting struct {
-	name   string
-	movies []movie
+	Name   string
+	Movies []movie
 }
 
 type movie struct {
-	name    string
-	raiting int
-	crew    []person
+	Name    string
+	Raiting int
+	Crew    []person
 }
 
 type person struct {
-	name string
-	roll string
+	Name string
+	Roll string
 }
