@@ -1,44 +1,47 @@
 package main
 
-//this pulls all raiting data for a user
 import (
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func FetchUserRestuls(username string) userRaiting {
 	resp, err := http.Get("https://letterboxd.com/" + username + "/films/ratings/")
-	userMovies := userRaiting{}
+	userHtmlPages := []*goquery.Document{}
 	if err != nil {
 		log.Fatalln(err)
 	}
-	//b, err := goquery.NewDocumentFromReader()
-	b, err := io.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	b, _ := io.ReadAll(resp.Body)
+	firstPage, err := goquery.NewDocumentFromReader(strings.NewReader(string(b)))
+	userHtmlPages = append(userHtmlPages, firstPage)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	userMovies = parseList(userMovies, string(b))
 	pageCount := getPageCount(string(b))
-	for i := 2; i <= pageCount; i++ { //Could add concurrency here for improvmenet in large users.
-		extraBody := fetchExtraPage(username, pageCount)
-		userMovies = parseList(userMovies, extraBody)
+	for i := 2; i <= pageCount; i++ { //TODO: Could add concurrency here for improvmenet in large users.
+		userHtmlPages = append(userHtmlPages, fetchExtraPage(username, i))
 	}
 	fmt.Println("Fetch finished, now parsing")
-
-	return userMovies
+	return parseList(userHtmlPages, username)
 }
 
-func fetchExtraPage(username string, pageNo int) string {
+func fetchExtraPage(username string, pageNo int) *goquery.Document {
 	resp, err := http.Get("https://letterboxd.com/" + username + "/films/ratings/page/" + strconv.Itoa(pageNo) + "/")
 	if err != nil {
-		return ""
+		log.Fatal(err)
 	}
-	b, err := io.ReadAll(resp.Body)
+	b, _ := io.ReadAll(resp.Body)
+	Page, err := goquery.NewDocumentFromReader(strings.NewReader(string(b)))
 	if err != nil {
-		return ""
+		log.Fatal(err)
 	}
-	return string(b)
+	return Page
 }

@@ -3,5 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(FetchUserRestuls("sigmasalt"))
+	user := FetchUserRestuls("sigmasalt")
+	fmt.Println(user)
+	fmt.Println(len(user.movies))
 }
