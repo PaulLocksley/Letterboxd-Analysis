@@ -12,14 +12,15 @@ func userlist(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Referrer Policy", "application/json")
 	args := r.URL.Query()
 	user := FetchUserRestuls(args.Get("u"))
-	JsonUser, err := json.Marshal(user)
+	JsonUser, _ := json.Marshal(user)
 	fmt.Fprintf(w, string(JsonUser))
-	fmt.Println("Endpoint Hit: homePage", string(JsonUser), user, "\n", err)
+	//fmt.Println("Endpoint Hit: homePage", string(JsonUser), user, "\n")
 }
 
 func handleRequests() {
 	http.HandleFunc("/user", userlist)
-	log.Fatal(http.ListenAndServe(":1313", nil))
+	//log.Fatal(http.ListenAndServe(":1313", nil))
+	log.Fatal(http.ListenAndServeTLS(":1313", "public.pem", "private.pem", nil))
 }
 
 func main() {

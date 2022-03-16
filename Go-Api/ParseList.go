@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/PuerkitoBio/goquery"
 )
 
@@ -43,6 +41,6 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 			y++
 		})
 	}
-	fmt.Println("Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
+	//fmt.Println("Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
 	return userRaitings
 }

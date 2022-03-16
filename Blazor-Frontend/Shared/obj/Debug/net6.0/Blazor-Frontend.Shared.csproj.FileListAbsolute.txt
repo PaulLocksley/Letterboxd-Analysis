@@ -1,0 +1,12 @@
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\bin\Debug\net6.0\Blazor-Frontend.Shared.deps.json
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\bin\Debug\net6.0\Blazor-Frontend.Shared.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\bin\Debug\net6.0\ref\Blazor-Frontend.Shared.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\bin\Debug\net6.0\Blazor-Frontend.Shared.pdb
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.csproj.AssemblyReference.cache
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.AssemblyInfoInputs.cache
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.AssemblyInfo.cs
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.csproj.CoreCompileInputs.cache
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\ref\Blazor-Frontend.Shared.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Shared\obj\Debug\net6.0\Blazor-Frontend.Shared.pdb

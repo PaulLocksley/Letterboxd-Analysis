@@ -1,0 +1,38 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-secondary" @onclick="getResponse">Call API</button>
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+
+    private async void getResponse()
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://192.168.20.150:1313/user?u=sigmasalt");
+            using var httpResponse = await client.SendAsync(request);
+			httpResponse.EnsureSuccessStatusCode();
+			using var responseStream = await httpResponse.Content.ReadAsStreamAsync();
+			Console.WriteLine(responseStream);
+        }
+        catch(HttpRequestException e)
+		{
+			Console.WriteLine("\nException Caught!");	
+			Console.WriteLine("Message :{0} ",e.Message);
+		}
+
+    }
+}

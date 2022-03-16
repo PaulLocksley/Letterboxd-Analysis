@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -26,12 +26,16 @@ func FetchUserRestuls(username string) userRaiting {
 	pageCount := getPageCount(string(b))
 	userHtmlPages := make([]*goquery.Document, pageCount)
 	userHtmlPages[0] = firstPage
+	var wg sync.WaitGroup
 	for i := 2; i <= pageCount; i++ {
-		//go func(i int, userHTMLPages []*goquery.Document) { //Todo: Work this out so it doesnt take 10 seconds per 500 results
-		userHtmlPages[i-1] = fetchExtraPage(username, i)
-		//}(i, userHtmlPages)
+		wg.Add(1)
+		go func(i int, userHTMLPages []*goquery.Document) { //Todo: Work this out so it doesnt take 10 seconds per 500 results
+			defer wg.Done()
+			userHtmlPages[i-1] = fetchExtraPage(username, i)
+		}(i, userHtmlPages)
 	}
-	fmt.Println("Fetch finished, now parsing")
+	wg.Wait()
+	//fmt.Println("Fetch finished, now parsing")
 	return parseList(userHtmlPages, username)
 }
 
