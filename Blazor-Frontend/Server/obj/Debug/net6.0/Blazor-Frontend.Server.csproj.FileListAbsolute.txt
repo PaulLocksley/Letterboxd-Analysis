@@ -44,3 +44,4 @@ C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Server\obj\Debug\net6.0\Blazor-F
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Server\obj\Debug\net6.0\ref\Blazor-Frontend.Server.dll
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Server\obj\Debug\net6.0\Blazor-Frontend.Server.pdb
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Server\obj\Debug\net6.0\Blazor-Frontend.Server.genruntimeconfig.cache
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Server\bin\Debug\net6.0\Newtonsoft.Json.dll

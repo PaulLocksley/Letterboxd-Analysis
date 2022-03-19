@@ -821,3 +821,7 @@ C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\obj\Debug\net6.0\Blazor-F
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\obj\Debug\net6.0\Blazor-Frontend.Client.dll
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\obj\Debug\net6.0\ref\Blazor-Frontend.Client.dll
 C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\obj\Debug\net6.0\Blazor-Frontend.Client.pdb
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Projects\Letterboxd-Analysis\Blazor-Frontend\Client\obj\Debug\net6.0\build-gz\iwG0jZ8p.gz

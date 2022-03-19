@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "akZY72Yy/rWT07ZxIXfoh5BwgRVjF9HA45QpwBvas4/d4xT5/7Bh7Bm0u0w5lf2FkboRMI1+TcOjJ0jmgJlxrw==",
+  "dgSpecHash": "fvDO33nnFykQi+2IM8mPQfQDlYUm9VuDg8Emg3oaDuYc26FQJU2fjS3JSH5S5pdCh2Fm+EqdFPEtubsDT1EAAA==",
   "success": true,
   "projectFilePath": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Server\\Blazor-Frontend.Server.csproj",
   "expectedPackageFiles": [
@@ -28,6 +28,7 @@
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.jsinterop\\6.0.1\\microsoft.jsinterop.6.0.1.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.jsinterop.webassembly\\6.0.1\\microsoft.jsinterop.webassembly.6.0.1.nupkg.sha512",
+    "C:\\Users\\reall\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\system.io.pipelines\\6.0.1\\system.io.pipelines.6.0.1.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",

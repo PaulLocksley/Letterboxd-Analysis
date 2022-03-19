@@ -8,6 +8,7 @@ type userRaiting struct {
 type movie struct {
 	Name    string
 	Raiting int
+	ID      string
 	Crew    []person
 }
 

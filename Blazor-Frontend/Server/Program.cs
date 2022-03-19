@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//                      builder =>
+//                      {
+//                          builder.WithOrigins("https://locksley.dev:1313"
+//                                              );
+//                      });
+//});
 
 var app = builder.Build();
 
@@ -27,7 +38,7 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapRazorPages();
 app.MapControllers();

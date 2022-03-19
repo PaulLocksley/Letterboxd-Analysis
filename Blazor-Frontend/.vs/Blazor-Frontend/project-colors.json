@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f0c95e08-e539-42d7-b8db-c89c725ce460": {
+      "ProjectGuid": "f0c95e08-e539-42d7-b8db-c89c725ce460",
+      "DisplayName": "Blazor-Frontend.Server",
+      "ColorIndex": 0
+    },
+    "9fc36bc5-140f-4f84-bdc0-fcb383970c17": {
+      "ProjectGuid": "9fc36bc5-140f-4f84-bdc0-fcb383970c17",
+      "DisplayName": "Blazor-Frontend.Client",
+      "ColorIndex": 1
+    },
+    "ca5d1484-9de3-4725-a20e-ddaaa8f18d6c": {
+      "ProjectGuid": "ca5d1484-9de3-4725-a20e-ddaaa8f18d6c",
+      "DisplayName": "Blazor-Frontend.Shared",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

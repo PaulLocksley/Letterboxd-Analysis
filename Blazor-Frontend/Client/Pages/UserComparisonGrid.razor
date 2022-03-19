@@ -1,0 +1,114 @@
+﻿@page "/UserComparisonGrid"
+@using Blazor_Frontend.Shared
+@using System.Text.Json
+@using System.Text.Json.Serialization;
+@using System.Net.Http.Json
+
+
+<PageTitle>User Comparison</PageTitle>
+<h1>User Comparison</h1>
+
+<button class="btn btn-primary" @onclick="() => getUserList()">Call API</button>
+
+<input type="text" @bind="@UserNames[0]" @oninput="@((e) => { UserNames[0]=(string)e.Value;})" />
+<input type="text" @bind="@UserNames[1]" @oninput="@((e) => { UserNames[1]=(string)e.Value;})" />
+<input type="text" @bind="@UserNames[2]" @oninput="@((e) => { UserNames[2]=(string)e.Value;})" />
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Movie</th>
+        @foreach (string userName in UserNames)
+            {
+                <th>@userName</th>
+            }
+            <th> Avg Delta @averageDelta</th>
+        </tr>
+    </thread>
+    <tbody>
+    @foreach (SharedMovieObject tableMovie in UsersSharedMovieList)
+    {
+        <tr> 
+            <td>@tableMovie.MovieName</td>
+                @for (int i = 0; i < UserNames.Count; i++)
+                {
+                    <td>@UserScore(UserNames[i], tableMovie)</td>
+                }
+                <td>@tableMovie.AverageRaitingDifference</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+@code {
+    private string uri = "https://locksley.dev:1313/user?u=";
+    public List<string> UserNames = new List<string> { "Sigmasalt", "Sigmascoop", "jay_adra" };
+    public List<SharedMovieObject> UsersSharedMovieList = new List<SharedMovieObject> { };
+    public Double averageDelta = 0.0;
+    private int UserScore(string userName, SharedMovieObject movie)
+    {
+        foreach(UserRaiting userRaitingList in movie.UserRaitings)
+        {
+            if (userRaitingList.UserName == userName) {
+                return userRaitingList.Raiting;
+            }
+        }
+        return -10000;
+    }
+
+    private void UpdateMatchingList(List<UserMovieListModel> userLists)
+    {
+        UsersSharedMovieList = new List<SharedMovieObject> { };
+
+        foreach (Movie userMovie in userLists[0].Movies){
+            List<UserRaiting> tmpMovieRaitings = new List<UserRaiting> { };
+            tmpMovieRaitings.Add(new UserRaiting(userLists[0].Name, userMovie.Raiting));
+            for (var i = 1; i < userLists.Count; i++)
+            {
+                var tmpMovie = userLists[i].Movies.FirstOrDefault(movie => movie.ID == userMovie.ID);
+                if (tmpMovie == null) {
+                    goto NEXTMOVIE;
+                }
+                tmpMovieRaitings.Add(new UserRaiting(userLists[i].Name, tmpMovie.Raiting));
+                if (i == userLists.Count - 1) {
+                    // public SharedMovieList(UserRaiting[] UserRaitings, string MovieName, string ID)
+                    UsersSharedMovieList.Add(new SharedMovieObject(tmpMovieRaitings.ToArray(), userMovie.Name, userMovie.ID));
+                }
+            }
+NEXTMOVIE:
+            continue;
+        }
+        Console.WriteLine(UsersSharedMovieList.Count + " Movies matched between users");
+        var deltaSum = 0;
+        foreach(SharedMovieObject sharedMovie in UsersSharedMovieList)
+        {
+            deltaSum += sharedMovie.AverageRaitingDifference;
+        }
+        averageDelta = (double)deltaSum / (double)UsersSharedMovieList.Count;
+        StateHasChanged();
+    }
+
+
+    private async void getUserList()
+    {
+        HttpClient client = new HttpClient();
+        var userLists = new List<UserMovieListModel>();
+        try
+        {   
+            foreach (string username in UserNames) {
+                var user = await HttpClientJsonExtensions.GetFromJsonAsync<UserMovieListModel>(client, uri+username);
+                if (user != null){
+                    userLists.Add(user);
+                    Console.WriteLine("Added " + user);
+                }
+            }
+            UpdateMatchingList(userLists);
+        }
+        catch(HttpRequestException e)
+        {
+            Console.WriteLine("\nException Caught!");	
+            Console.WriteLine("Message :{0} ",e.Message);
+        }
+    }
+}

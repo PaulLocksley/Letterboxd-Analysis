@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "d/+hIoJWYPC+s4D2N5uscOU60buFg9zzWoDwPqQAN4k=",
+  "Hash": "SfnXp+LF9tcUsDk8Z3aFycz2HhdKhgkiv66YrHdPCHU=",
   "Source": "Blazor-Frontend.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -729,6 +729,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\reall\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.1\\runtimes\\browser-wasm\\lib\\net6.0\\netstandard.dll"
+    },
+    {
+      "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "SourceId": "Blazor-Frontend.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\reall\\.nuget\\packages\\newtonsoft.json\\13.0.1\\lib\\netstandard2.0\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.AppContext.dll",
@@ -5013,6 +5030,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Diagnostics.TraceSource.dll"
+    },
+    {
+      "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\obj\\Debug\\net6.0\\build-gz\\iwG0jZ8p.gz",
+      "SourceId": "Blazor-Frontend.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\obj\\Debug\\net6.0\\build-gz\\j8gn91Yw.gz",

@@ -1,5 +1,8 @@
 ﻿@page "/counter"
-
+@using Blazor_Frontend.Shared
+@using System.Text.Json
+@using System.Text.Json.Serialization;
+@using System.Net.Http.Json
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -20,19 +23,19 @@
     private async void getResponse()
     {
         HttpClient client = new HttpClient();
+        var userLists = new List<UserMovieListModel>();
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://192.168.20.150:1313/user?u=sigmasalt");
-            using var httpResponse = await client.SendAsync(request);
-			httpResponse.EnsureSuccessStatusCode();
-			using var responseStream = await httpResponse.Content.ReadAsStreamAsync();
-			Console.WriteLine(responseStream);
+            var user = await HttpClientJsonExtensions.GetFromJsonAsync<UserMovieListModel>(client,"https://locksley.dev:1313/user?u=sigmasalt");
+            if (user != null){
+                userLists.Add(user);
+                Console.WriteLine("Added " + user);
+            }
         }
         catch(HttpRequestException e)
 		{
 			Console.WriteLine("\nException Caught!");	
 			Console.WriteLine("Message :{0} ",e.Message);
 		}
-
     }
 }

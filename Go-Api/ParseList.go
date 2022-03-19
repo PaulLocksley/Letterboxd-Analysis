@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/PuerkitoBio/goquery"
 )
 
@@ -34,13 +36,18 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 			case " ★★★★★ ":
 				movie.Raiting = 10
 			}
+			//fmt.Println(s.Html())
 			titleHtml := s.Find(".image").First()
 			title, _ := titleHtml.Attr("alt")
 			movie.Name = title
+			IDHTML := s.Find(".really-lazy-load").First()
+			id, _ := IDHTML.Attr("data-film-id")
+			movie.ID = id
+
 			userRaitings.Movies = append(userRaitings.Movies, movie)
 			y++
 		})
 	}
-	//fmt.Println("Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
+	fmt.Println("User ", username, " Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
 	return userRaitings
 }
