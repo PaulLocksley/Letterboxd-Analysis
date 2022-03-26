@@ -24,7 +24,8 @@ namespace Blazor_Frontend.Shared
             {
                 userRaitingTotal += UserRaitings[0].Raiting - UserRaitings[i].Raiting;
             }
-            this.AverageRaitingDifference = (int)Math.Round((float)Math.Abs(userRaitingTotal) / (float)UserRaitings.Length, MidpointRounding.AwayFromZero);
+            //this.AverageRaitingDifference = (int)Math.Round((float)Math.Abs(userRaitingTotal) / (float)(UserRaitings.Length-1), MidpointRounding.AwayFromZero);
+            this.AverageRaitingDifference = (int)Math.Round((float)userRaitingTotal / (float)(UserRaitings.Length - 1), MidpointRounding.AwayFromZero);
         }
     }
     public struct UserRaiting
@@ -36,5 +37,12 @@ namespace Blazor_Frontend.Shared
             this.UserName = userName;
             this.Raiting = Raiting;
         }
+    }
+
+    public enum LoadingStates
+    {
+        fetching,
+        parsing,
+        done
     }
 }

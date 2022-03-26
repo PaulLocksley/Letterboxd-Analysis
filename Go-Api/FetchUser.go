@@ -29,7 +29,7 @@ func FetchUserRestuls(username string) userRaiting {
 	var wg sync.WaitGroup
 	for i := 2; i <= pageCount; i++ {
 		wg.Add(1)
-		go func(i int, userHTMLPages []*goquery.Document) { //Todo: Work this out so it doesnt take 10 seconds per 500 results
+		go func(i int, userHTMLPages []*goquery.Document) {
 			defer wg.Done()
 			userHtmlPages[i-1] = fetchExtraPage(username, i)
 		}(i, userHtmlPages)

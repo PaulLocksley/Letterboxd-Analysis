@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.ResponseCompression;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -17,8 +18,11 @@ builder.Services.AddRazorPages();
 //                                              );
 //                      });
 //});
-
+//builder.Services.AddAuthentication(
+//        CertificateAuthenticationDefaults.AuthenticationScheme)
+//    .AddCertificate();
 var app = builder.Build();
+//app.UseAuthentication();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

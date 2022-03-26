@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -9,6 +10,7 @@ import (
 func parseList(pages []*goquery.Document, username string) userRaiting {
 	y := 0
 	userRaitings := userRaiting{Name: username, Movies: []movie{}}
+
 	for i := range pages {
 		pages[i].Find(".poster-container").Each(func(x int, s *goquery.Selection) {
 			movie := movie{}
@@ -44,10 +46,27 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 			id, _ := IDHTML.Attr("data-film-id")
 			movie.ID = id
 
+			link, _ := IDHTML.Attr("data-target-link")
+			movie.link = link
+			// movie.Crew = parseMovie(link, id)
 			userRaitings.Movies = append(userRaitings.Movies, movie)
 			y++
 		})
 	}
 	fmt.Println("User ", username, " Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
+	if len(pages) > 100 { //Todo: Fix for larger users disgusting hack to get through it until I make the DB connection
+		return userRaitings
+	}
+	//get crew
+	var wg sync.WaitGroup
+	for i := 0; i < len(userRaitings.Movies); i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			userRaitings.Movies[i].Crew = parseMovie(userRaitings.Movies[i].ID, userRaitings.Movies[i].link)
+		}(i)
+	}
+	wg.Wait()
+	//userRaitings.Movies[0].Crew = parseMovie(userRaitings.Movies[0].ID, userRaitings.Movies[0].link) //testing mode
 	return userRaitings
 }

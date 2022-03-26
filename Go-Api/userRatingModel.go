@@ -9,6 +9,7 @@ type movie struct {
 	Name    string
 	Raiting int
 	ID      string
+	link    string
 	Crew    []person
 }
 
