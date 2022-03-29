@@ -17,6 +17,45 @@
           "Blazor-Frontend.Server.dll": {}
         }
       },
+      "BlazorTable/1.17.0": {
+        "dependencies": {
+          "LinqKit.Core": "1.1.26",
+          "Microsoft.AspNetCore.Components": "6.0.1",
+          "Microsoft.AspNetCore.Components.Web": "6.0.1",
+          "Microsoft.Extensions.Localization": "3.1.18"
+        },
+        "runtime": {
+          "lib/netstandard2.1/BlazorTable.dll": {
+            "assemblyVersion": "1.17.0.0",
+            "fileVersion": "1.17.0.0"
+          }
+        },
+        "resources": {
+          "lib/netstandard2.1/da/BlazorTable.resources.dll": {
+            "locale": "da"
+          },
+          "lib/netstandard2.1/de/BlazorTable.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.1/es/BlazorTable.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.1/fr/BlazorTable.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.1/pt-BR/BlazorTable.resources.dll": {
+            "locale": "pt-BR"
+          }
+        }
+      },
+      "LinqKit.Core/1.1.26": {
+        "runtime": {
+          "lib/netstandard2.1/LinqKit.Core.dll": {
+            "assemblyVersion": "1.1.26.0",
+            "fileVersion": "1.1.26.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Certificate/6.0.3": {
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "6.0.1"
@@ -185,6 +224,15 @@
         }
       },
       "Microsoft.Extensions.FileSystemGlobbing/6.0.0": {},
+      "Microsoft.Extensions.Localization/3.1.18": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "3.1.18",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Options": "6.0.0"
+        }
+      },
+      "Microsoft.Extensions.Localization.Abstractions/3.1.18": {},
       "Microsoft.Extensions.Logging/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
@@ -261,6 +309,7 @@
       "Blazor-Frontend.Client/1.0.0": {
         "dependencies": {
           "Blazor-Frontend.Shared": "1.0.0",
+          "BlazorTable": "1.17.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "6.0.1"
         },
         "runtime": {
@@ -282,6 +331,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BlazorTable/1.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ILENDhGe0EnNa126KAvHVHlbPbzaTcKTaaN9sG90gzwwF7sP9Uc7NDpeuDCzlhkUg4eHdkJnBPv1xb//jvUz5g==",
+      "path": "blazortable/1.17.0",
+      "hashPath": "blazortable.1.17.0.nupkg.sha512"
+    },
+    "LinqKit.Core/1.1.26": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-svSbON3rh4QVIeTK7sDO8OyC2lrhDGctnRPUMNPKVChMPY2v/x0DDtfBq7CWsWyuaYD00q5TxVKoZkW5+pqcXw==",
+      "path": "linqkit.core/1.1.26",
+      "hashPath": "linqkit.core.1.1.26.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.Certificate/6.0.3": {
       "type": "package",
@@ -429,6 +492,20 @@
       "sha512": "sha512-ip8jnL1aPiaPeKINCqaTEbvBFDmVx9dXQEBZ2HOBRXPD1eabGNqP/bKlsIcp7U2lGxiXd5xIhoFcmY8nM4Hdiw==",
       "path": "microsoft.extensions.filesystemglobbing/6.0.0",
       "hashPath": "microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Localization/3.1.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-k2GGkPlWUtPlR/hKGUv+CknsBfU5ntys9SspNJtpE1SPGvf5wtsaTOLq+jjvwr14Z7amFDfFnYGX/P3It82v5Q==",
+      "path": "microsoft.extensions.localization/3.1.18",
+      "hashPath": "microsoft.extensions.localization.3.1.18.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Localization.Abstractions/3.1.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-215w5E3BW2G4iQK0YpOmOZu+3Mi/gc8JaLLj4t6b8NpTGmjOiAk1eigwiYreCZpa2M/mFzlnh4AgrN0t/lMtIQ==",
+      "path": "microsoft.extensions.localization.abstractions/3.1.18",
+      "hashPath": "microsoft.extensions.localization.abstractions.3.1.18.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",

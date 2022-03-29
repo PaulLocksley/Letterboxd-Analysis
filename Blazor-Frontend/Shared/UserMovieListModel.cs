@@ -47,10 +47,48 @@ namespace Blazor_Frontend.Shared
         }
     }
 
-    public partial class Person
+    public partial class Person : IEquatable<Person>
     {
         public string Name { get; set; }
         public string Roll { get; set; }
+
+        public Person(string Name, string Roll)
+        {
+            this.Name = Name;
+            this.Roll = Roll;
+        }
+
+        public bool Equals(Person other)
+        {
+            if (this.Name == other.Name && this.Roll == other.Roll)
+            {
+                return true;
+            } else
+            {
+                return false;
+
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) {
+                return false;
+            }
+            Person personObj = obj as Person;
+            if (personObj == null)
+            {
+                return false;
+            } else
+            {
+                return Equals(obj as Person);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.Name.GetHashCode() + this.Roll.GetHashCode()).GetHashCode();
+        }
     }
 }
 

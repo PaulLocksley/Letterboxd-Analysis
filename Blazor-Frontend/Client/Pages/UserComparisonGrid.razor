@@ -4,11 +4,12 @@
 @using System.Text.Json.Serialization;
 @using System.Net.Http.Json
 
-
 <PageTitle>User Comparison</PageTitle>
 <h1>User Comparison</h1>
 
 <button class="btn btn-primary" @onclick="() => getUserList()">Call API</button>
+<button class="btn btn-primary" @onclick="() => filterMember(Kspace)"> Filter Kevin </button>
+<button class="btn btn-primary" @onclick="() => resetFilter()"> Reset Filter </button>
 
 <input type="text" @bind="@UserNames[0]" @oninput="@((e) => { UserNames[0]=(string)e.Value;})" />
 <input type="text" @bind="@UserNames[1]" @oninput="@((e) => { UserNames[1]=(string)e.Value;})" />
@@ -21,7 +22,13 @@
 }
 else{
 
- 
+ <div class="container">
+        @foreach (KeyValuePair<Person, int> entry in FilterList)
+        {
+            var tmpPerson = entry.Key;
+            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)"> Filter   @entry.Key.Name   @entry.Key.Roll   @entry.Value</button>
+        }
+    </div>
 <table class="table">
     <thread>
         <tr>
@@ -37,7 +44,7 @@ else{
     @foreach (SharedMovieObject tableMovie in UsersSharedMovieList)
     {
         <tr> 
-            <td>@tableMovie.MovieName</td>
+            <td>@tableMovie.Movie.Name</td>
                 @for (int i = 0; i < UserNames.Count; i++)
                 {
                     <td>@UserScore(UserNames[i], tableMovie)</td>
@@ -46,16 +53,20 @@ else{
         </tr>
     }
     </tbody>
-</table>
+    </table>
 }
 
 @code {
+    public Person Kspace = new Person(Name: "Kevin Spacey", Roll: "Cast");
     private string uri = "https://locksley.dev:1313/user?u=";
     public List<string> UserNames = new List<string> { "Sigmasalt", "Sigmascoop"};
     public List<SharedMovieObject> UsersSharedMovieList = new List<SharedMovieObject> { };
+    public List<SharedMovieObject> PreFilterUsersSharedMovieList = new List<SharedMovieObject> { };
     public Double averageDelta = 0.0;
     public LoadingStates loading = LoadingStates.done;
     public int MatchedMovieCount = 0;
+    public IDictionary<Person, int> FilterList = new Dictionary<Person, int>();
+
     private int UserScore(string userName, SharedMovieObject movie)
     {
         foreach(UserRaiting userRaitingList in movie.UserRaitings)
@@ -65,6 +76,63 @@ else{
             }
         }
         return -10000;
+    }    
+    private void resetFilter()
+    {
+        UsersSharedMovieList = new List<SharedMovieObject>(PreFilterUsersSharedMovieList);
+        updateFilterList();
+        countAverage();
+        StateHasChanged();
+    }
+
+    private void filterMember(Person teamMember){
+        loading = LoadingStates.parsing;
+        for (int i = UsersSharedMovieList.Count -1; i >=0; i--)
+        {
+            if(!UsersSharedMovieList[i].Movie.Crew.Any(Person => Person.Name == teamMember.Name && Person.Roll == teamMember.Roll))
+            {
+                UsersSharedMovieList.RemoveAt(i);
+            }
+        }
+
+        updateFilterList();
+        Console.WriteLine(UsersSharedMovieList.Count);
+        countAverage();
+        loading = LoadingStates.done;
+        StateHasChanged();
+
+    }
+    private void updateFilterList()
+    {
+      FilterList = new Dictionary<Person, int>();
+
+        loading = LoadingStates.parsing;
+        foreach (SharedMovieObject sharedMovie in UsersSharedMovieList)
+        {
+            foreach (Person teamMember in sharedMovie.Movie.Crew)
+            {
+                if (FilterList.ContainsKey(teamMember)){
+                    FilterList[teamMember] += 1;
+                }
+                else
+                {
+                    FilterList[teamMember] = 1;
+                }
+            }
+        }
+    }
+
+
+    private void countAverage()
+    {
+        MatchedMovieCount = UsersSharedMovieList.Count;
+        var deltaSum = 0;
+        foreach(SharedMovieObject sharedMovie in UsersSharedMovieList)
+        {
+            deltaSum += Math.Abs(sharedMovie.AverageRaitingDifference);
+        }
+        averageDelta = (double)deltaSum / (double)UsersSharedMovieList.Count;
+
     }
 
     private void UpdateMatchingList(List<UserMovieListModel> userLists)
@@ -72,7 +140,6 @@ else{
     //todo: split list filter and calculations.
     {
         loading = LoadingStates.parsing;
-
         UsersSharedMovieList = new List<SharedMovieObject> { };
 
         foreach (Movie userMovie in userLists[0].Movies){
@@ -86,23 +153,18 @@ else{
                 }
                 tmpMovieRaitings.Add(new UserRaiting(userLists[i].Name, tmpMovie.Raiting));
                 if (i == userLists.Count - 1) {
-                    UsersSharedMovieList.Add(new SharedMovieObject(tmpMovieRaitings.ToArray(), userMovie.Name, userMovie.ID));
+                    UsersSharedMovieList.Add(new SharedMovieObject(tmpMovieRaitings.ToArray(), userMovie, userMovie.ID));
                 }
             }
 NEXTMOVIE:
             continue;
         }
-
         Console.WriteLine(UsersSharedMovieList.Count + " Movies matched between users");
-        MatchedMovieCount = UsersSharedMovieList.Count;
-        var deltaSum = 0;
-        foreach(SharedMovieObject sharedMovie in UsersSharedMovieList)
-        {
-            deltaSum += Math.Abs(sharedMovie.AverageRaitingDifference);
-        }
-        averageDelta = (double)deltaSum / (double)UsersSharedMovieList.Count;
         UsersSharedMovieList = UsersSharedMovieList.OrderByDescending(o => o.AverageRaitingDifference).ToList();
+        PreFilterUsersSharedMovieList = new List<SharedMovieObject>(UsersSharedMovieList);
 
+        updateFilterList();
+        countAverage();
         loading = LoadingStates.done;
         StateHasChanged();
     }
@@ -130,4 +192,5 @@ NEXTMOVIE:
             Console.WriteLine("Message :{0} ",e.Message);
         }
     }
+
 }

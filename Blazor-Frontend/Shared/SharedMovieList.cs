@@ -11,14 +11,14 @@ namespace Blazor_Frontend.Shared
     {
         //I feel like theres a better way to represent this relationship using the data I allready have.
         public UserRaiting[] UserRaitings;
-        public string MovieName;
+        public Movie Movie;
         public string ID;
         public int AverageRaitingDifference;
-        public SharedMovieObject(UserRaiting[] UserRaitings, string MovieName, string ID)
+        public SharedMovieObject(UserRaiting[] UserRaitings, Movie Movie, string ID)
         {
             this.ID = ID;
             this.UserRaitings = UserRaitings;
-            this.MovieName = MovieName;
+            this.Movie = Movie;
             var userRaitingTotal = 0;
             for (var i = 1; i < UserRaitings.Length; i++)
             {

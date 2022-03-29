@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "npm4lX60kbfT/MzVXqhQmPIVKPyyWaSxwwgE3PItklo55TqJEUxrepqpanLze2Gjjeajg0Hsg24HshSp9hNnvA==",
+  "dgSpecHash": "i9Kd55qqhddVVtZN/l6qhp/OfAEZ2RH+EGUHo3ERUqB1H68wOpfFF7hCzF+to/KVsnDJmBmTq00DoCFIm9uFMA==",
   "success": true,
   "projectFilePath": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Server\\Blazor-Frontend.Server.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\reall\\.nuget\\packages\\blazortable\\1.17.0\\blazortable.1.17.0.nupkg.sha512",
+    "C:\\Users\\reall\\.nuget\\packages\\linqkit.core\\1.1.26\\linqkit.core.1.1.26.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.aspnetcore.authentication.certificate\\6.0.3\\microsoft.aspnetcore.authentication.certificate.6.0.3.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.1\\microsoft.aspnetcore.authorization.6.0.1.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.1\\microsoft.aspnetcore.components.6.0.1.nupkg.sha512",
@@ -25,6 +27,8 @@
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
+    "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.localization\\3.1.18\\microsoft.extensions.localization.3.1.18.nupkg.sha512",
+    "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\3.1.18\\microsoft.extensions.localization.abstractions.3.1.18.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.logging\\6.0.0\\microsoft.extensions.logging.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\reall\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
