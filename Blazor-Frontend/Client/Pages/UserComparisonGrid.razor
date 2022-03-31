@@ -3,6 +3,9 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization;
 @using System.Net.Http.Json
+<head>
+        <link href="css/LetterboxdComparison.css" rel="stylesheet" />
+</head>
 
 <PageTitle>User Comparison</PageTitle>
 <h1>User Comparison</h1>
@@ -21,14 +24,32 @@
     <h2>@loading</h2>
 }
 else{
-
- <div class="container">
+    @if (FilterList.Count > 0)
+    {
+        @*<div class="filter-container">
         @foreach (KeyValuePair<Person, int> entry in FilterList)
         {
             var tmpPerson = entry.Key;
-            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)"> Filter   @entry.Key.Name   @entry.Key.Roll   @entry.Value</button>
+            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @entry.Key.Name   @entry.Key.Roll   @entry.Value</button> <br />
         }
-    </div>
+        </div>*@
+        @foreach (KeyValuePair<string, Dictionary<string,int>> roles in FilterList)
+        {
+            var sortedDict = from entry in roles.Value orderby entry.Value descending select entry; //https://stackoverflow.com/questions/289/how-do-you-sort-a-dictionary-by-value
+            <div class="filter-container">
+                 <h2> @roles.Key</h2>
+
+               
+                @foreach(KeyValuePair<string, int> names in sortedDict)
+                {
+                    var tmpPerson = new Person(Name: names.Key, Roll: roles.Key);
+                    <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @names.Key   @names.Value</button> <br />
+
+                }
+                </div>
+        }
+    }
+    
 <table class="table">
     <thread>
         <tr>
@@ -65,8 +86,8 @@ else{
     public Double averageDelta = 0.0;
     public LoadingStates loading = LoadingStates.done;
     public int MatchedMovieCount = 0;
-    public IDictionary<Person, int> FilterList = new Dictionary<Person, int>();
-
+    //public IDictionary<Person, int> FilterList = new Dictionary<Person, int>(); 
+    public Dictionary<string, Dictionary<string, int>> FilterList = new Dictionary<string, Dictionary<string, int>>(); 
     private int UserScore(string userName, SharedMovieObject movie)
     {
         foreach(UserRaiting userRaitingList in movie.UserRaitings)
@@ -104,19 +125,39 @@ else{
     }
     private void updateFilterList()
     {
-      FilterList = new Dictionary<Person, int>();
+        //FilterList = new Dictionary<Person, int>();
+
+        //  loading = LoadingStates.parsing;
+        //  foreach (SharedMovieObject sharedMovie in UsersSharedMovieList)
+        //  {
+        //      foreach (Person teamMember in sharedMovie.Movie.Crew)
+        //      {
+        //          if (FilterList.ContainsKey(teamMember)){
+        //              FilterList[teamMember] += 1;
+        //          }
+        //          else
+        //          {
+        //              FilterList[teamMember] = 1;
+        //          }
+        //      }
+        //  }
+        FilterList =  new Dictionary<string, Dictionary<string, int>>(); 
 
         loading = LoadingStates.parsing;
         foreach (SharedMovieObject sharedMovie in UsersSharedMovieList)
         {
             foreach (Person teamMember in sharedMovie.Movie.Crew)
             {
-                if (FilterList.ContainsKey(teamMember)){
-                    FilterList[teamMember] += 1;
+                if (!FilterList.ContainsKey(teamMember.Roll)){
+                    FilterList[teamMember.Roll] = new Dictionary<string, int>();
+                }
+                if (FilterList[teamMember.Roll].ContainsKey(teamMember.Name)){
+
+                    FilterList[teamMember.Roll][teamMember.Name] += 1;
                 }
                 else
                 {
-                    FilterList[teamMember] = 1;
+                    FilterList[teamMember.Roll][teamMember.Name]  = 1;
                 }
             }
         }
@@ -140,6 +181,7 @@ else{
     //todo: split list filter and calculations.
     {
         loading = LoadingStates.parsing;
+        StateHasChanged();
         UsersSharedMovieList = new List<SharedMovieObject> { };
 
         foreach (Movie userMovie in userLists[0].Movies){
@@ -181,7 +223,7 @@ NEXTMOVIE:
                 var user = await HttpClientJsonExtensions.GetFromJsonAsync<UserMovieListModel>(client, uri+username);
                 if (user != null){
                     userLists.Add(user);
-                    Console.WriteLine("Added " + user);
+                    //Console.WriteLine("Added " + user);
                 }
             }
             UpdateMatchingList(userLists);

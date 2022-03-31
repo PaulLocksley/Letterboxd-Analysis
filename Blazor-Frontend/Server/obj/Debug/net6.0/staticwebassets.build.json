@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6JcACEAfMv6HY6uLWTP7fwSMw0DUuOcCH6LqNNVNol4=",
+  "Hash": "BrF4pSgX2kxLzIOv3EWJCnlCSxHW9nrma0eQsUt2ypY=",
   "Source": "Blazor-Frontend.Server",
   "BasePath": "_content/Blazor-Frontend.Server",
   "Mode": "Default",
@@ -7286,6 +7286,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\wwwroot\\css\\LetterboxdComparison.css",
+      "SourceId": "Blazor-Frontend.Client",
+      "SourceType": "Project",
+      "ContentRoot": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/LetterboxdComparison.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\LetterboxdComparison.css"
     },
     {
       "Identity": "C:\\Projects\\Letterboxd-Analysis\\Blazor-Frontend\\Client\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
