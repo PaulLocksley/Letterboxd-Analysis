@@ -11,7 +11,6 @@
 <h1>User Comparison</h1>
 
 <button class="btn btn-primary" @onclick="() => getUserList()">Call API</button>
-<button class="btn btn-primary" @onclick="() => filterMember(Kspace)"> Filter Kevin </button>
 <button class="btn btn-primary" @onclick="() => resetFilter()"> Reset Filter </button>
 
 <input type="text" @bind="@UserNames[0]" @oninput="@((e) => { UserNames[0]=(string)e.Value;})" />
@@ -30,7 +29,7 @@ else{
         @foreach (KeyValuePair<Person, int> entry in FilterList)
         {
             var tmpPerson = entry.Key;
-            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @entry.Key.Name   @entry.Key.Roll   @entry.Value</button> <br />
+            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @entry.Key.Name   @entry.Key.Role   @entry.Value</button> <br />
         }
         </div>*@
         @foreach (KeyValuePair<string, Dictionary<string,int>> roles in FilterList)
@@ -42,7 +41,7 @@ else{
                
                 @foreach(KeyValuePair<string, int> names in sortedDict)
                 {
-                    var tmpPerson = new Person(Name: names.Key, Roll: roles.Key);
+                    var tmpPerson = new Person(Name: names.Key, Role: roles.Key);
                     <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @names.Key   @names.Value</button> <br />
 
                 }
@@ -78,7 +77,6 @@ else{
 }
 
 @code {
-    public Person Kspace = new Person(Name: "Kevin Spacey", Roll: "Cast");
     private string uri = "https://locksley.dev:1313/user?u=";
     public List<string> UserNames = new List<string> { "Sigmasalt", "Sigmascoop"};
     public List<SharedMovieObject> UsersSharedMovieList = new List<SharedMovieObject> { };
@@ -110,7 +108,7 @@ else{
         loading = LoadingStates.parsing;
         for (int i = UsersSharedMovieList.Count -1; i >=0; i--)
         {
-            if(!UsersSharedMovieList[i].Movie.Crew.Any(Person => Person.Name == teamMember.Name && Person.Roll == teamMember.Roll))
+            if(!UsersSharedMovieList[i].Movie.Crew.Any(Person => Person.Name == teamMember.Name && Person.Role == teamMember.Role))
             {
                 UsersSharedMovieList.RemoveAt(i);
             }
@@ -148,16 +146,16 @@ else{
         {
             foreach (Person teamMember in sharedMovie.Movie.Crew)
             {
-                if (!FilterList.ContainsKey(teamMember.Roll)){
-                    FilterList[teamMember.Roll] = new Dictionary<string, int>();
+                if (!FilterList.ContainsKey(teamMember.Role)){
+                    FilterList[teamMember.Role] = new Dictionary<string, int>();
                 }
-                if (FilterList[teamMember.Roll].ContainsKey(teamMember.Name)){
+                if (FilterList[teamMember.Role].ContainsKey(teamMember.Name)){
 
-                    FilterList[teamMember.Roll][teamMember.Name] += 1;
+                    FilterList[teamMember.Role][teamMember.Name] += 1;
                 }
                 else
                 {
-                    FilterList[teamMember.Roll][teamMember.Name]  = 1;
+                    FilterList[teamMember.Role][teamMember.Name]  = 1;
                 }
             }
         }

@@ -15,5 +15,5 @@ type movie struct {
 
 type person struct {
 	Name string
-	Roll string
+	Role string
 }

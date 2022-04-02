@@ -54,7 +54,7 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 		})
 	}
 	fmt.Println("User ", username, " Pages,", len(pages), "Movie Count", y, " Should be close to ", len(pages)*18)
-	if len(pages) > 100 { //Todo: Fix for larger users disgusting hack to get through it until I make the DB connection
+	if len(pages) > 100 { //Todo: Fix for larger users
 		return userRaitings
 	}
 	//get crew
@@ -67,6 +67,8 @@ func parseList(pages []*goquery.Document, username string) userRaiting {
 		}(i)
 	}
 	wg.Wait()
+
+	go writeCacheResults(userRaitings.Movies)
 	//userRaitings.Movies[0].Crew = parseMovie(userRaitings.Movies[0].ID, userRaitings.Movies[0].link) //testing mode
 	return userRaitings
 }

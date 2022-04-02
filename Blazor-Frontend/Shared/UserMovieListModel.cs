@@ -50,17 +50,17 @@ namespace Blazor_Frontend.Shared
     public partial class Person : IEquatable<Person>
     {
         public string Name { get; set; }
-        public string Roll { get; set; }
+        public string Role { get; set; }
 
-        public Person(string Name, string Roll)
+        public Person(string Name, string Role)
         {
             this.Name = Name;
-            this.Roll = Roll;
+            this.Role = Role;
         }
 
         public bool Equals(Person other)
         {
-            if (this.Name == other.Name && this.Roll == other.Roll)
+            if (this.Name == other.Name && this.Role == other.Role)
             {
                 return true;
             } else
@@ -87,7 +87,7 @@ namespace Blazor_Frontend.Shared
 
         public override int GetHashCode()
         {
-            return (this.Name.GetHashCode() + this.Roll.GetHashCode()).GetHashCode();
+            return (this.Name.GetHashCode() + this.Role.GetHashCode()).GetHashCode();
         }
     }
 }
