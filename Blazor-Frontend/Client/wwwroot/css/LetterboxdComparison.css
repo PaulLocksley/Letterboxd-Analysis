@@ -1,6 +1,35 @@
 ﻿.filter-container {
-    height: 400px;
+    height: 450px;
     max-width: 20%;
-    overflow-y: scroll;
     float: left;
+    background: #750D37;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.scrollable-container {
+    float: left;
+    overflow-y: scroll;
+    max-height: 80%;
+}
+
+.filter-row {
+    direction: ltr;
+}
+
+.filter-title {
+    padding: 15px;
+    color: #fefffe;
+}
+
+.filter-button {
+    margin: 10px;
+    color: #000000;
+    background-color: #b3dec1;
+    border-color: #210124;
+}
+
+.table-wrapper {
+    width: auto;
+    display: block;
 }

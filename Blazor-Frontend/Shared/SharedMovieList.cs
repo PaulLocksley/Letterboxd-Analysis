@@ -41,6 +41,7 @@ namespace Blazor_Frontend.Shared
 
     public enum LoadingStates
     {
+        uninitialized,
         fetching,
         parsing,
         done

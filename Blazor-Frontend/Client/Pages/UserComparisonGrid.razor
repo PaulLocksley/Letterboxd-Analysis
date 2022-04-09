@@ -7,83 +7,93 @@
         <link href="css/LetterboxdComparison.css" rel="stylesheet" />
 </head>
 
-<PageTitle>User Comparison</PageTitle>
-<h1>User Comparison</h1>
-
-<button class="btn btn-primary" @onclick="() => getUserList()">Call API</button>
-<button class="btn btn-primary" @onclick="() => resetFilter()"> Reset Filter </button>
+<PageTitle>Letterboxd User Comparison</PageTitle>
+<div>
+<h1>Letterboxd User Comparison</h1>
 
 <input type="text" @bind="@UserNames[0]" @oninput="@((e) => { UserNames[0]=(string)e.Value;})" />
 <input type="text" @bind="@UserNames[1]" @oninput="@((e) => { UserNames[1]=(string)e.Value;})" />
 @*<input type="text" @bind="@UserNames[2]" @oninput="@((e) => { UserNames[2]=(string)e.Value;})" />
-*@
+<input type="text" @bind="@UserNames[3]" @oninput="@((e) => { UserNames[3]=(string)e.Value;})" />*@
+<button class="btn btn-primary" @onclick="() => getUserList()">Call API</button>
+<button class="btn btn-secondary" @onclick="() => toggleFilterListVisibility()">Toggle Filter View</button>
+<button class="btn btn-warning" @onclick="() => resetFilter()"> Reset Filter </button>
 
- @if (loading != LoadingStates.done)
+</div>
+
+@if (loading == LoadingStates.uninitialized)
+{
+    <h3> Instructions </h3>
+    <p> To use this application enter the user url for the users you would like to compare.
+        For example user url for the High On Films profile is https://letterboxd.com/highonfilms/ , so you would enter "highonfilms" in the above text box</p>
+}else if (loading != LoadingStates.done)
 {
     <h2>@loading</h2>
 }
 else{
-    @if (FilterList.Count > 0)
+    @if (showingFilterList)
     {
-        @*<div class="filter-container">
-        @foreach (KeyValuePair<Person, int> entry in FilterList)
-        {
-            var tmpPerson = entry.Key;
-            <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @entry.Key.Name   @entry.Key.Role   @entry.Value</button> <br />
-        }
-        </div>*@
-        @foreach (KeyValuePair<string, Dictionary<string,int>> roles in FilterList)
-        {
-            var sortedDict = from entry in roles.Value orderby entry.Value descending select entry; //https://stackoverflow.com/questions/289/how-do-you-sort-a-dictionary-by-value
-            <div class="filter-container">
-                 <h2> @roles.Key</h2>
-
-               
-                @foreach(KeyValuePair<string, int> names in sortedDict)
-                {
-                    var tmpPerson = new Person(Name: names.Key, Role: roles.Key);
-                    <button class="btn btn-secondary" @onclick="() => filterMember(tmpPerson)">   @names.Key   @names.Value</button> <br />
-
-                }
-                </div>
-        }
-    }
-    
-<table class="table">
-    <thread>
-        <tr>
-            <th>Movie @MatchedMovieCount</th>
-        @foreach (string userName in UserNames)
+        <div class="filter-row">
+            @if (FilterList.Count > 0)
             {
-                <th>@userName</th>
-            }
-            <th> Avg Delta @averageDelta</th>
-        </tr>
-    </thread>
-    <tbody>
-    @foreach (SharedMovieObject tableMovie in UsersSharedMovieList)
-    {
-        <tr> 
-            <td>@tableMovie.Movie.Name</td>
-                @for (int i = 0; i < UserNames.Count; i++)
+                @foreach (KeyValuePair<string, Dictionary<string, int>> roles in FilterList)
                 {
-                    <td>@UserScore(UserNames[i], tableMovie)</td>
+                    var sortedDict = from entry in roles.Value orderby entry.Value descending select entry; //https://stackoverflow.com/questions/289/how-do-you-sort-a-dictionary-by-value
+                    <div class="filter-container">
+                        <h2 class="filter-title"> @roles.Key</h2>
+                        <div class="scrollable-container">
+                            @foreach (KeyValuePair<string, int> names in sortedDict)
+                            {
+                                var tmpPerson = new Person(Name: names.Key, Role: roles.Key);
+                                <button class="btn filter-button" @onclick="() => filterMember(tmpPerson)"> @names.Key   @names.Value </button> <br />
+
+                            }
+                        </div>
+                    </div>
                 }
-                <td>@tableMovie.AverageRaitingDifference</td>
-        </tr>
+
+            }
+        </div>
     }
-    </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="table table-hover">
+           <thead>
+                <tr>
+                    <th  scope="col">Movie @MatchedMovieCount</th>
+                @foreach (string userName in UserNames)
+                    {
+                        <th  scope="col">@userName</th>
+                    }
+                    <th  scope="col"> Avg Delta @averageDelta</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (SharedMovieObject tableMovie in UsersSharedMovieList)
+            {
+                <tr> 
+                    <th scope="row">@tableMovie.Movie.Name</th>
+                        @for (int i = 0; i < UserNames.Count; i++)
+                        {
+                            <td>@UserScore(UserNames[i], tableMovie)</td>
+                        }
+                        <td>@tableMovie.AverageRaitingDifference</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
     private string uri = "https://locksley.dev:1313/user?u=";
-    public List<string> UserNames = new List<string> { "Sigmasalt", "Sigmascoop"};
+    public List<string> UserNames = new List<string> { "Username 1", "Username 2" };
     public List<SharedMovieObject> UsersSharedMovieList = new List<SharedMovieObject> { };
     public List<SharedMovieObject> PreFilterUsersSharedMovieList = new List<SharedMovieObject> { };
     public Double averageDelta = 0.0;
-    public LoadingStates loading = LoadingStates.done;
-    public int MatchedMovieCount = 0;
+    public LoadingStates loading = LoadingStates.uninitialized;
+    public int MatchedMovieCount => UsersSharedMovieList.Count;
+
+    public bool showingFilterList = false;
     //public IDictionary<Person, int> FilterList = new Dictionary<Person, int>(); 
     public Dictionary<string, Dictionary<string, int>> FilterList = new Dictionary<string, Dictionary<string, int>>(); 
     private int UserScore(string userName, SharedMovieObject movie)
@@ -96,11 +106,17 @@ else{
         }
         return -10000;
     }    
+
+    private void toggleFilterListVisibility()
+    {
+        showingFilterList = !showingFilterList;
+    }
     private void resetFilter()
     {
         UsersSharedMovieList = new List<SharedMovieObject>(PreFilterUsersSharedMovieList);
         updateFilterList();
         countAverage();
+        loading = LoadingStates.done;
         StateHasChanged();
     }
 
@@ -123,22 +139,7 @@ else{
     }
     private void updateFilterList()
     {
-        //FilterList = new Dictionary<Person, int>();
 
-        //  loading = LoadingStates.parsing;
-        //  foreach (SharedMovieObject sharedMovie in UsersSharedMovieList)
-        //  {
-        //      foreach (Person teamMember in sharedMovie.Movie.Crew)
-        //      {
-        //          if (FilterList.ContainsKey(teamMember)){
-        //              FilterList[teamMember] += 1;
-        //          }
-        //          else
-        //          {
-        //              FilterList[teamMember] = 1;
-        //          }
-        //      }
-        //  }
         FilterList =  new Dictionary<string, Dictionary<string, int>>(); 
 
         loading = LoadingStates.parsing;
@@ -164,7 +165,6 @@ else{
 
     private void countAverage()
     {
-        MatchedMovieCount = UsersSharedMovieList.Count;
         var deltaSum = 0;
         foreach(SharedMovieObject sharedMovie in UsersSharedMovieList)
         {
