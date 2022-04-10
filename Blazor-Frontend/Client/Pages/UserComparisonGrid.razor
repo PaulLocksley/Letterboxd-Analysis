@@ -145,6 +145,10 @@ else{
         loading = LoadingStates.parsing;
         foreach (SharedMovieObject sharedMovie in UsersSharedMovieList)
         {
+            if(sharedMovie.Movie.Crew == null || sharedMovie.Movie.Crew.Length == 0)
+            {
+                continue;
+            }
             foreach (Person teamMember in sharedMovie.Movie.Crew)
             {
                 if (!FilterList.ContainsKey(teamMember.Role)){
