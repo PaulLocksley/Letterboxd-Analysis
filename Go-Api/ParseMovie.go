@@ -10,11 +10,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-//
-//tab-genres  tab-details //next week goal
-//
 func parseMovie(id string, url string) []person {
-	if cachedResult, ok := movieCache[id]; ok {
+	if cachedResult, ok := movieCache[id]; ok && id != "TEMP" { //
 		return cachedResult
 	}
 	people := []person{}
@@ -33,6 +30,8 @@ func parseMovie(id string, url string) []person {
 	Cast := movieDetails.Find(".cast-list").First()
 	Details := movieDetails.Find("#tab-details").First()
 	Genre := movieDetails.Find("#tab-genres").First()
+
+	ranking := getRanking(url)
 	crewText, _ := Crew.Html()
 	castText, _ := Cast.Html()
 	detailsText, _ := Details.Html()
@@ -41,12 +40,34 @@ func parseMovie(id string, url string) []person {
 	castList := parseCast(castText)
 	detailsList := parseDetails(detailsText)
 	genreList := parseGenre(genreText)
+
+	if ranking != "66.66" {
+		people = append(people, person{ranking, "ranking"})
+	}
 	people = append(people, genreList...)
 	people = append(people, castList...)
 	people = append(people, crewList...)
 	people = append(people, detailsList...)
 
 	return people
+}
+
+func getRanking(link string) string {
+	//passed into "/film/decision-to-leave/"
+	//csi/film/three-billboards-outside-ebbing-missouri/rating-histogram/
+
+	resp, err := http.Get("https://letterboxd.com/csi" + link + "rating-histogram/")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	b, _ := io.ReadAll(resp.Body)
+	body := string(b)
+	r1, _ := regexp.Compile(`"Weighted average of ([\d\.]*)`)
+	rankingMatch := r1.FindAllStringSubmatch(body, -1)
+	if len(rankingMatch) == 0 || len(rankingMatch[0]) < 2 {
+		return "66.66"
+	}
+	return rankingMatch[0][1]
 }
 
 func parseDetails(detailsList string) []person { //TODO: fix this so I am not hiding this in a person so I don't need to rewrite my cache
